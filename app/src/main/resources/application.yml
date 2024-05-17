@@ -1,5 +1,13 @@
 spring:
   application:
     name: habit-or-die
+  datasource:
+    url: jdbc:postgresql://localhost:5432/habitordie
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+      show-sql: true
   banner:
     location: static/banner.txt
