@@ -1,0 +1,26 @@
+name: Check branch name
+on:
+  pull_request:
+    branches:
+      - main
+env:
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+
+jobs:
+  check-branch-name:
+    name: Check branch name
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate branch name
+        run: |
+          branch_name=${BRANCH_NAME}
+          pattern="^(feature|bugfix|hotfix|release|experiment|task|epic|story|improvement|chore)\/HD-[0-9]+(-[a-z0-9-]+)?( [a-z0-9]+)*$"
+          
+          if ! [[ $branch_name =~ $pattern ]]; then
+            echo "Error: Branch name '$branch_name' does not match the required naming convention."
+            echo "Pattern: $pattern"
+            exit 1
+          fi

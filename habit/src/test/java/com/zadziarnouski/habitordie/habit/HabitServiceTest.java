@@ -38,24 +38,24 @@ class HabitServiceTest {
         List<HabitDto> habitDtos = createHabitDtos();
 
         when(habitRepository.findAll()).thenReturn(habits);
-        when(habitMapper.toDto(habits.getFirst())).thenReturn(habitDtos.getFirst());
-        when(habitMapper.toDto(habits.getLast())).thenReturn(habitDtos.getLast());
+        when(habitMapper.toDto(habits.get(0))).thenReturn(habitDtos.get(0));
+        when(habitMapper.toDto(habits.get(1))).thenReturn(habitDtos.get(1));
 
         // When
         List<HabitDto> allHabits = habitService.getAllHabits();
 
         // Then
         assertEquals(2, habits.size());
-        assertEquals(habitDtos.getFirst(), allHabits.getFirst());
-        assertEquals(habitDtos.getLast(), allHabits.getLast());
+        assertEquals(habitDtos.get(0), allHabits.get(0));
+        assertEquals(habitDtos.get(1), allHabits.get(1));
         verify(habitRepository, times(1)).findAll();
     }
 
     @Test
     void givenHabitExists_whenGetHabitById_thenReturnHabitDto() {
         // Given
-        Habit habit = createHabits().getFirst();
-        HabitDto habitDto = createHabitDtos().getFirst();
+        Habit habit = createHabits().get(0);
+        HabitDto habitDto = createHabitDtos().get(0);
 
         when(habitRepository.findById(HABIT_ID)).thenReturn(Optional.of(habit));
         when(habitMapper.toDto(habit)).thenReturn(habitDto);
@@ -83,8 +83,8 @@ class HabitServiceTest {
     @Test
     void givenHabitDto_whenCreateHabit_thenSaveHabitAndReturnHabitDto() {
         // Given
-        Habit habit = createHabits().getFirst();
-        HabitDto habitDto = createHabitDtos().getFirst();
+        Habit habit = createHabits().get(0);
+        HabitDto habitDto = createHabitDtos().get(0);
 
         when(habitMapper.toEntity(habitDto)).thenReturn(habit);
         when(habitRepository.save(habit)).thenReturn(habit);
@@ -104,9 +104,9 @@ class HabitServiceTest {
     @Test
     void givenExistingHabit_whenUpdateHabit_thenUpdateAndReturnHabitDto() {
         // Given
-        HabitDto updatedHabitDto = createHabitDtos().getLast();
-        Habit existingHabit = createHabits().getFirst();
-        Habit updatedHabit = createHabits().getLast();
+        HabitDto updatedHabitDto = createHabitDtos().get(1);
+        Habit existingHabit = createHabits().get(0);
+        Habit updatedHabit = createHabits().get(1);
         updatedHabit.setId(existingHabit.getId());
 
         when(habitRepository.findById(HABIT_ID)).thenReturn(Optional.of(existingHabit));
@@ -129,7 +129,7 @@ class HabitServiceTest {
         when(habitRepository.findById(HABIT_ID)).thenReturn(Optional.empty());
 
         // When / Then
-        assertThrows(ResponseStatusException.class, () -> habitService.updateHabit(HABIT_ID, createHabitDtos().getLast()));
+        assertThrows(ResponseStatusException.class, () -> habitService.updateHabit(HABIT_ID, createHabitDtos().get(1)));
         verify(habitRepository, times(1)).findById(HABIT_ID);
         verifyNoInteractions(habitMapper);
     }
