@@ -1,0 +1,14 @@
+#!/bin/sh
+
+while read oldrev newrev refname
+do
+  branch_name=$(echo $refname | sed 's!refs/heads/!!')
+
+  pattern="^(feature|bugfix|hotfix|release|experiment|task|epic|story|improvement|chore)\/HD-[0-9]+(-[a-z0-9-]+)?( [a-z0-9]+)*$"
+
+  if ! [[ $branch_name =~ $pattern ]]; then
+    echo "Error: Branch name '$branch_name' does not match the required naming convention."
+    echo "Pattern: $pattern"
+    exit 1
+  fi
+done
