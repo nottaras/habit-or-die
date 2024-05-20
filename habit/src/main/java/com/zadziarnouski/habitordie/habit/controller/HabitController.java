@@ -1,6 +1,8 @@
-package com.zadziarnouski.habitordie.habit;
+package com.zadziarnouski.habitordie.habit.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zadziarnouski.habitordie.habit.dto.HabitDto;
+import com.zadziarnouski.habitordie.habit.service.HabitService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.deps)
     alias(libs.plugins.lombok)
+    jacoco
 }
 
 group = rootProject.group
@@ -29,5 +30,36 @@ dependencies {
 tasks {
     bootJar {
         enabled = false
+    }
+
+    test {
+        useJUnitPlatform()
+        finalizedBy(jacocoTestReport)
+    }
+
+    jacocoTestReport {
+        finalizedBy(jacocoTestCoverageVerification)
+
+        reports {
+            html.required = true
+        }
+    }
+
+    jacocoTestCoverageVerification {
+        classDirectories.setFrom(files(classDirectories.files.map {
+            fileTree(it) {
+                include(
+                    "**/com/zadziarnouski/habitordie/**/service/**",
+                )
+            }
+        }))
+
+        violationRules {
+            rule {
+                limit {
+                    minimum = 0.80.toBigDecimal()
+                }
+            }
+        }
     }
 }

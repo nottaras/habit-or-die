@@ -1,5 +1,9 @@
-package com.zadziarnouski.habitordie.habit;
+package com.zadziarnouski.habitordie.habit.service;
 
+import com.zadziarnouski.habitordie.habit.entity.Habit;
+import com.zadziarnouski.habitordie.habit.dto.HabitDto;
+import com.zadziarnouski.habitordie.habit.mapper.HabitMapper;
+import com.zadziarnouski.habitordie.habit.repository.HabitRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,7 +24,7 @@ public class HabitService {
     private final HabitRepository habitRepository;
     private final HabitMapper habitMapper;
 
-    List<HabitDto> getAllHabits() {
+    public List<HabitDto> getAllHabits() {
         return habitRepository.findAll().stream()
                 .map(habitMapper::toDto)
                 .toList();
