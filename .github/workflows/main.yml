@@ -8,31 +8,13 @@ on:
       - main
 env:
   APP_NAME: habit-or-die
-  JAVA_VERSION: 21
+  JAVA_VERSION: 17
   DISTRIBUTION: 'temurin'
-  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
 jobs:
-  check-branch-name:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Validate branch name
-        run: |
-          branch_name=${BRANCH_NAME}
-          pattern="^(feature|bugfix|hotfix|release|experiment|task|epic|story|improvement|chore)\/HD-[0-9]+(-[a-z0-9-]+)?( [a-z0-9]+)*$"
-          
-          if ! [[ $branch_name =~ $pattern ]]; then
-            echo "Error: Branch name '$branch_name' does not match the required naming convention."
-            echo "Pattern: $pattern"
-            exit 1
-          fi
-
   build:
+    name: Build
     runs-on: ubuntu-latest
-    needs: check-branch-name
 
     steps:
       - name: Checkout code
@@ -51,6 +33,7 @@ jobs:
         run: ./gradlew build
 
   test:
+    name: Test
     runs-on: ubuntu-latest
     needs: build
 
