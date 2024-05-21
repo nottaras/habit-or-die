@@ -1,4 +1,4 @@
-package com.zadziarnouski.habitordie.habit;
+package com.zadziarnouski.habitordie.habit.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

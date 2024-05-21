@@ -1,4 +1,4 @@
-package com.zadziarnouski.habitordie.habit;
+package com.zadziarnouski.habitordie.habit.dto;
 
 
 import jakarta.validation.constraints.NotBlank;

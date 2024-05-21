@@ -7,7 +7,6 @@ plugins {
 group = rootProject.group
 version = rootProject.version
 
-
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
 

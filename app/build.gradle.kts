@@ -17,8 +17,6 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-layout.buildDirectory = file("../build")
-
 tasks {
     jar {
         enabled = false

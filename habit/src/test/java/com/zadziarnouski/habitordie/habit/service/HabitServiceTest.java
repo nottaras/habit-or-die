@@ -1,5 +1,9 @@
-package com.zadziarnouski.habitordie.habit;
+package com.zadziarnouski.habitordie.habit.service;
 
+import com.zadziarnouski.habitordie.habit.dto.HabitDto;
+import com.zadziarnouski.habitordie.habit.entity.Habit;
+import com.zadziarnouski.habitordie.habit.repository.HabitRepository;
+import com.zadziarnouski.habitordie.habit.mapper.HabitMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -153,13 +157,13 @@ class HabitServiceTest {
     }
 
     private List<HabitDto> createHabitDtos() {
-        HabitDto habitDto1 = new HabitDto.HabitDtoBuilder()
+        HabitDto habitDto1 = HabitDto.builder()
                 .name("Habit 1")
                 .description("Description 1")
                 .frequency("Daily")
                 .build();
 
-        HabitDto habitDto2 = new HabitDto.HabitDtoBuilder()
+        HabitDto habitDto2 = HabitDto.builder()
                 .name("Habit 2")
                 .description("Description 2")
                 .frequency("Weekly")
