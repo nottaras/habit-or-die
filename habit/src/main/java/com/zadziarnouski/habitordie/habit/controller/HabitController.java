@@ -1,19 +1,19 @@
 package com.zadziarnouski.habitordie.habit.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zadziarnouski.habitordie.habit.dto.HabitDto;
+import com.zadziarnouski.habitordie.habit.exception.ErrorResponse;
 import com.zadziarnouski.habitordie.habit.service.HabitService;
-import jakarta.servlet.http.HttpServletRequest;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,14 +22,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.DefaultResponseErrorHandler;
 
-import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
-import static java.util.stream.Collectors.toMap;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
@@ -38,67 +34,77 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @RestController
 @RequestMapping("/habits")
 @RequiredArgsConstructor
+@Tag(name = "Habits", description = "Operations related to habit resource")
 public class HabitController {
 
     private final HabitService habitService;
-    private final ObjectMapper objectMapper;
 
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200", description = "Found the habits", content = {@Content(mediaType = "application/json",
+                    array = @ArraySchema(schema = @Schema(implementation = HabitDto.class)))}
+            ),
+            @ApiResponse(responseCode = "200", description = "Habits not found", content = @Content)
+
+    })
     @GetMapping
     List<HabitDto> getAllHabits() {
         return habitService.getAllHabits();
     }
 
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200", description = "Found the habit", content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = HabitDto.class))),
+            @ApiResponse(
+                    responseCode = "404", description = "Habit not found", content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @GetMapping("/{id}")
     public HabitDto getHabitById(@PathVariable Long id) {
         return habitService.getHabitById(id);
     }
 
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "201", description = "Habit created", content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = HabitDto.class))),
+            @ApiResponse(
+                    responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @PostMapping
     @ResponseStatus(CREATED)
     public HabitDto createHabit(@Valid @RequestBody HabitDto habitDto) {
         return habitService.createHabit(habitDto);
     }
 
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200", description = "Habit updated", content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = HabitDto.class))),
+            @ApiResponse(
+                    responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(
+                    responseCode = "404", description = "Habit not found", content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @PutMapping("/{id}")
     public HabitDto updateHabit(@PathVariable Long id, @Valid @RequestBody HabitDto habitDto) {
         return habitService.updateHabit(id, habitDto);
     }
 
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "204", description = "Habit deleted", content = @Content),
+            @ApiResponse(
+                    responseCode = "404", description = "Habit not found", content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @DeleteMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
     public void deleteHabit(@PathVariable Long id) {
         habitService.deleteHabit(id);
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, Object>> handleValidationExceptions(MethodArgumentNotValidException ex,
-                                                                          HttpServletRequest request) {
-        Map<String, Object> errorResponse = buildErrorResponse(buildMessage(ex), request);
-
-        log.error("Error response: {}", errorResponse);
-
-        return new ResponseEntity<>(errorResponse, BAD_REQUEST);
-    }
-
-    private Map<String, Object> buildErrorResponse(String message, HttpServletRequest request) {
-        Map<String, Object> errorResponse = new LinkedHashMap<>();
-
-        errorResponse.put("timestamp", LocalDateTime.now());
-        errorResponse.put("status", BAD_REQUEST.value());
-        errorResponse.put("error", BAD_REQUEST.getReasonPhrase());
-        errorResponse.put("message", message);
-        errorResponse.put("path", request.getRequestURI());
-
-        return errorResponse;
-    }
-
-    @SneakyThrows
-    private String buildMessage(MethodArgumentNotValidException ex) {
-        Map<String, String> messageMap = ex.getBindingResult().getFieldErrors()
-                .stream()
-                .filter(error -> error.getDefaultMessage() != null)
-                .collect(toMap(FieldError::getField, FieldError::getDefaultMessage));
-
-        return objectMapper.writeValueAsString(messageMap);
     }
 }

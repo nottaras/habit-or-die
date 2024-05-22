@@ -1,7 +1,8 @@
 package com.zadziarnouski.habitordie.habit.service;
 
-import com.zadziarnouski.habitordie.habit.entity.Habit;
 import com.zadziarnouski.habitordie.habit.dto.HabitDto;
+import com.zadziarnouski.habitordie.habit.entity.Habit;
+import com.zadziarnouski.habitordie.habit.exception.NotFoundException;
 import com.zadziarnouski.habitordie.habit.mapper.HabitMapper;
 import com.zadziarnouski.habitordie.habit.repository.HabitRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-
-import static org.springframework.http.HttpStatus.*;
 
 @Slf4j
 @Service
@@ -25,7 +24,9 @@ public class HabitService {
     private final HabitMapper habitMapper;
 
     public List<HabitDto> getAllHabits() {
-        return habitRepository.findAll().stream()
+        List<Habit> habits = habitRepository.findAll();
+        log.info("Retrieved {} habits from the database", habits.size());
+        return habits.stream()
                 .map(habitMapper::toDto)
                 .toList();
     }
@@ -39,6 +40,7 @@ public class HabitService {
     @Transactional
     public HabitDto createHabit(HabitDto habitDto) {
         Habit savedHabit = habitRepository.save(habitMapper.toEntity(habitDto));
+        log.info("Habit with id {} created", savedHabit.getId());
         return habitMapper.toDto(savedHabit);
     }
 
@@ -62,10 +64,12 @@ public class HabitService {
                 .orElseThrow(() -> handleHabitNotFound(id));
 
         habitRepository.delete(habit);
+        log.info("Habit with id {} deleted successfully", id);
     }
 
     private ResponseStatusException handleHabitNotFound(Long id) {
-        log.error(HABIT_NOT_FOUND_MESSAGE.formatted(id));
-        return new ResponseStatusException(NOT_FOUND, HABIT_NOT_FOUND_MESSAGE.formatted(id));
+        String errorMessage = HABIT_NOT_FOUND_MESSAGE.formatted(id);
+        log.error(errorMessage);
+        return new NotFoundException(errorMessage);
     }
 }
