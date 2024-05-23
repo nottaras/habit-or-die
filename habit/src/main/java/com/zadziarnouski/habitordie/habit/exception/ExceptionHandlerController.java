@@ -1,6 +1,7 @@
 package com.zadziarnouski.habitordie.habit.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zadziarnouski.common.dto.ErrorResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -26,9 +27,9 @@ public class ExceptionHandlerController {
 
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ErrorResponse handleValidationExceptions(MethodArgumentNotValidException ex,
-                                                    HttpServletRequest request) {
-        ErrorResponse error = ErrorResponse.builder()
+    public ErrorResponseDto handleValidationExceptions(MethodArgumentNotValidException ex,
+                                                       HttpServletRequest request) {
+        var error = ErrorResponseDto.builder()
                 .timestamp(LocalDateTime.now())
                 .status(BAD_REQUEST.value())
                 .error(BAD_REQUEST.getReasonPhrase())

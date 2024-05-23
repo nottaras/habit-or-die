@@ -5,13 +5,23 @@ spring:
     url: jdbc:postgresql://localhost:5432/habitordie
     username: postgres
     password: postgres
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: create-drop
-      show-sql: true
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  banner:
+    location: static/banner.txt
+
+security:
+  secret-key: 7c3c2951317a444f32556f6d56242d753020743751596135642d432e3c
+  token-expiration-duration: 24
 
 server:
   error:
     include-message: always
-  banner:
-    location: static/banner.txt

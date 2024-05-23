@@ -1,7 +1,6 @@
 package com.zadziarnouski.habitordie.habit.service;
 
 import com.zadziarnouski.habitordie.habit.dto.HabitDto;
-import com.zadziarnouski.habitordie.habit.entity.Habit;
 import com.zadziarnouski.habitordie.habit.exception.NotFoundException;
 import com.zadziarnouski.habitordie.habit.mapper.HabitMapper;
 import com.zadziarnouski.habitordie.habit.repository.HabitRepository;
@@ -24,7 +23,7 @@ public class HabitService {
     private final HabitMapper habitMapper;
 
     public List<HabitDto> getAllHabits() {
-        List<Habit> habits = habitRepository.findAll();
+        var habits = habitRepository.findAll();
         log.info("Retrieved {} habits from the database", habits.size());
         return habits.stream()
                 .map(habitMapper::toDto)
@@ -39,7 +38,7 @@ public class HabitService {
 
     @Transactional
     public HabitDto createHabit(HabitDto habitDto) {
-        Habit savedHabit = habitRepository.save(habitMapper.toEntity(habitDto));
+        var savedHabit = habitRepository.save(habitMapper.toEntity(habitDto));
         log.info("Habit with id {} created", savedHabit.getId());
         return habitMapper.toDto(savedHabit);
     }
@@ -60,7 +59,7 @@ public class HabitService {
 
     @Transactional
     public void deleteHabit(Long id) {
-        Habit habit = habitRepository.findById(id)
+        var habit = habitRepository.findById(id)
                 .orElseThrow(() -> handleHabitNotFound(id));
 
         habitRepository.delete(habit);
@@ -68,7 +67,7 @@ public class HabitService {
     }
 
     private ResponseStatusException handleHabitNotFound(Long id) {
-        String errorMessage = HABIT_NOT_FOUND_MESSAGE.formatted(id);
+        var errorMessage = HABIT_NOT_FOUND_MESSAGE.formatted(id);
         log.error(errorMessage);
         return new NotFoundException(errorMessage);
     }
