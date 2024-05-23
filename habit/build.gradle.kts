@@ -11,6 +11,7 @@ version = rootProject.version
 
 
 dependencies {
+    implementation(project(":common"))
     implementation(project(":security"))
 
     implementation("org.springframework.boot:spring-boot-starter")

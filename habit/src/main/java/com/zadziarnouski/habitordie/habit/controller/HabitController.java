@@ -1,7 +1,7 @@
 package com.zadziarnouski.habitordie.habit.controller;
 
+import com.zadziarnouski.common.dto.ErrorResponseDto;
 import com.zadziarnouski.habitordie.habit.dto.HabitDto;
-import com.zadziarnouski.habitordie.habit.exception.ErrorResponse;
 import com.zadziarnouski.habitordie.habit.service.HabitService;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,14 +21,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.DefaultResponseErrorHandler;
 
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
-@Slf4j
 @Validated
 @RestController
 @RequestMapping("/habits")
@@ -58,7 +55,7 @@ public class HabitController {
                     schema = @Schema(implementation = HabitDto.class))),
             @ApiResponse(
                     responseCode = "404", description = "Habit not found", content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)))
+                    schema = @Schema(implementation = ErrorResponseDto.class)))
     })
     @GetMapping("/{id}")
     public HabitDto getHabitById(@PathVariable Long id) {
@@ -71,7 +68,7 @@ public class HabitController {
                     schema = @Schema(implementation = HabitDto.class))),
             @ApiResponse(
                     responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)))
+                    schema = @Schema(implementation = ErrorResponseDto.class)))
     })
     @PostMapping
     @ResponseStatus(CREATED)
@@ -85,10 +82,10 @@ public class HabitController {
                     schema = @Schema(implementation = HabitDto.class))),
             @ApiResponse(
                     responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class))),
+                    schema = @Schema(implementation = ErrorResponseDto.class))),
             @ApiResponse(
                     responseCode = "404", description = "Habit not found", content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)))
+                    schema = @Schema(implementation = ErrorResponseDto.class)))
     })
     @PutMapping("/{id}")
     public HabitDto updateHabit(@PathVariable Long id, @Valid @RequestBody HabitDto habitDto) {
@@ -100,7 +97,7 @@ public class HabitController {
                     responseCode = "204", description = "Habit deleted", content = @Content),
             @ApiResponse(
                     responseCode = "404", description = "Habit not found", content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)))
+                    schema = @Schema(implementation = ErrorResponseDto.class)))
     })
     @DeleteMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
