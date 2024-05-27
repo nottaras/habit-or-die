@@ -22,6 +22,12 @@ security:
   secret-key: 7c3c2951317a444f32556f6d56242d753020743751596135642d432e3c
   token-expiration-duration: 24
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [ "prometheus" ]
+
 server:
   error:
     include-message: always
