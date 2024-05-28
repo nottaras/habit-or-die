@@ -18,9 +18,12 @@ spring:
   banner:
     location: static/banner.txt
 
-security:
-  secret-key: 7c3c2951317a444f32556f6d56242d753020743751596135642d432e3c
-  token-expiration-duration: 24
+app:
+  jwt:
+    key: 7c3c2951317a444f32556f6d56242d753020743751596135642d432e3c
+    algorithm: HS256
+    issuer: http://localhost:8080
+    expires-in: 24h
 
 management:
   endpoints:
