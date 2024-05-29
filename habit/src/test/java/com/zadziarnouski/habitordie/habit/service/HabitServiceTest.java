@@ -1,20 +1,5 @@
 package com.zadziarnouski.habitordie.habit.service;
 
-import com.zadziarnouski.habitordie.habit.dto.HabitDto;
-import com.zadziarnouski.habitordie.habit.entity.Habit;
-import com.zadziarnouski.habitordie.habit.repository.HabitRepository;
-import com.zadziarnouski.habitordie.habit.mapper.HabitMapper;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
@@ -22,10 +7,25 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
+import com.zadziarnouski.habitordie.habit.dto.HabitDto;
+import com.zadziarnouski.habitordie.habit.entity.Habit;
+import com.zadziarnouski.habitordie.habit.mapper.HabitMapper;
+import com.zadziarnouski.habitordie.habit.repository.HabitRepository;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.server.ResponseStatusException;
+
 @ExtendWith(MockitoExtension.class)
 class HabitServiceTest {
 
     public static final Long HABIT_ID = 1L;
+
     @InjectMocks
     private HabitService habitService;
 
@@ -104,7 +104,6 @@ class HabitServiceTest {
         verify(habitMapper, times(1)).toDto(habit);
     }
 
-//    ?????
     @Test
     void givenExistingHabit_whenUpdateHabit_thenUpdateAndReturnHabitDto() {
         // Given
@@ -133,7 +132,9 @@ class HabitServiceTest {
         when(habitRepository.findById(HABIT_ID)).thenReturn(Optional.empty());
 
         // When / Then
-        assertThrows(ResponseStatusException.class, () -> habitService.updateHabit(HABIT_ID, createHabitDtos().get(1)));
+        assertThrows(
+                ResponseStatusException.class,
+                () -> habitService.updateHabit(HABIT_ID, createHabitDtos().get(1)));
         verify(habitRepository, times(1)).findById(HABIT_ID);
         verifyNoInteractions(habitMapper);
     }
