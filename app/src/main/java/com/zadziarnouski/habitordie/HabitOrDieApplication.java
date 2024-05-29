@@ -13,5 +13,4 @@ public class HabitOrDieApplication {
     public static void main(String[] args) {
         SpringApplication.run(HabitOrDieApplication.class, args);
     }
-
 }

@@ -1,7 +1,7 @@
 package com.zadziarnouski.habitordie.habit.mapper;
 
-import com.zadziarnouski.habitordie.habit.entity.Habit;
 import com.zadziarnouski.habitordie.habit.dto.HabitDto;
+import com.zadziarnouski.habitordie.habit.entity.Habit;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

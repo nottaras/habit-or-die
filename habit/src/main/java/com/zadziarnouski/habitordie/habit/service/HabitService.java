@@ -4,13 +4,12 @@ import com.zadziarnouski.habitordie.habit.dto.HabitDto;
 import com.zadziarnouski.habitordie.habit.exception.NotFoundException;
 import com.zadziarnouski.habitordie.habit.mapper.HabitMapper;
 import com.zadziarnouski.habitordie.habit.repository.HabitRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -25,15 +24,11 @@ public class HabitService {
     public List<HabitDto> getAllHabits() {
         var habits = habitRepository.findAll();
         log.info("Retrieved {} habits from the database", habits.size());
-        return habits.stream()
-                .map(habitMapper::toDto)
-                .toList();
+        return habits.stream().map(habitMapper::toDto).toList();
     }
 
     public HabitDto getHabitById(Long id) {
-        return habitRepository.findById(id)
-                .map(habitMapper::toDto)
-                .orElseThrow(() -> handleHabitNotFound(id));
+        return habitRepository.findById(id).map(habitMapper::toDto).orElseThrow(() -> handleHabitNotFound(id));
     }
 
     @Transactional
@@ -45,7 +40,8 @@ public class HabitService {
 
     @Transactional
     public HabitDto updateHabit(Long id, HabitDto habitDto) {
-        return habitRepository.findById(id)
+        return habitRepository
+                .findById(id)
                 .map(existingHabit -> {
                     existingHabit.setName(habitDto.name());
                     existingHabit.setDescription(habitDto.description());
@@ -59,8 +55,7 @@ public class HabitService {
 
     @Transactional
     public void deleteHabit(Long id) {
-        var habit = habitRepository.findById(id)
-                .orElseThrow(() -> handleHabitNotFound(id));
+        var habit = habitRepository.findById(id).orElseThrow(() -> handleHabitNotFound(id));
 
         habitRepository.delete(habit);
         log.info("Habit with id {} deleted successfully", id);
