@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.spring.deps)
     alias(libs.plugins.lombok)
     jacoco
+    alias(libs.plugins.spotless)
 }
 
 group = rootProject.group
@@ -27,6 +28,19 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+spotless {
+    java {
+        palantirJavaFormat()
+
+        toggleOffOn()
+        importOrder()
+        endWithNewline()
+        formatAnnotations()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+    }
 }
 
 tasks {

@@ -3,12 +3,14 @@ spring-boot = "3.2.5"
 spring-dependency-management = "1.1.4"
 lombok = "8.6"
 flyway = "10.13.0"
+spotless = "6.25.0"
 
 [plugins]
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 spring-deps = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
 lombok = { id = "io.freefair.lombok", version.ref = "lombok" }
 flyway = { id = "org.flywaydb.flyway", version.ref = "flyway" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 [libraries]
 [bundles]

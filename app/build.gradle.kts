@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.deps)
     alias(libs.plugins.flyway)
+    alias(libs.plugins.spotless)
 }
 
 group = "com.zadziarnouski"
@@ -36,4 +37,17 @@ flyway {
     url = "jdbc:postgresql://localhost:5432/habitordie"
     user = "postgres"
     password = "postgres"
+}
+
+spotless {
+    java {
+        palantirJavaFormat()
+
+        toggleOffOn()
+        importOrder()
+        endWithNewline()
+        formatAnnotations()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+    }
 }
