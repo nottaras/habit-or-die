@@ -2,32 +2,29 @@ plugins {
     `java-convention`
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.deps)
+    alias(libs.plugins.spotless)
     alias(libs.plugins.lombok)
     jacoco
-    alias(libs.plugins.spotless)
 }
-
-group = rootProject.group
-version = rootProject.version
-
 
 dependencies {
     implementation(project(":common"))
     implementation(project(":security"))
 
-    implementation("org.springframework.boot:spring-boot-starter")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
-    implementation("org.mapstruct:mapstruct:1.5.5.Final")
+    implementation(libs.springboot.starter)
+    implementation(libs.springboot.starter.web)
+    implementation(libs.springboot.starter.jpa)
+    implementation(libs.springboot.starter.validation)
+    implementation(libs.openapi)
+    implementation(libs.mapstruct)
 
-    runtimeOnly("org.postgresql:postgresql")
+    runtimeOnly(libs.postgresql)
 
-    annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
+    annotationProcessor(libs.mapstruct.processor)
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation(libs.springboot.starter.test)
+
+    testRuntimeOnly(libs.junit)
 }
 
 spotless {

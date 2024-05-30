@@ -18,8 +18,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> handleHabitNotFound(email));
+        return userRepository.findByEmail(email).orElseThrow(() -> handleHabitNotFound(email));
     }
 
     public void save(User user) {

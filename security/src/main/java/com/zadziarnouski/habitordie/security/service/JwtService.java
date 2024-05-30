@@ -3,12 +3,11 @@ package com.zadziarnouski.habitordie.security.service;
 import com.zadziarnouski.habitordie.security.property.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import java.util.Date;
+import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
-import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
@@ -17,13 +16,13 @@ public class JwtService {
     private final JwtProperties jwtProperties;
 
     public String generateToken(UserDetails userDetails) {
-        return Jwts
-                .builder()
+        return Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .signWith(jwtProperties.getKey(), jwtProperties.getAlgorithm())
                 .setIssuer(jwtProperties.getIssuer())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getExpiresIn().toMillis()))
+                .setExpiration(new Date(System.currentTimeMillis()
+                        + jwtProperties.getExpiresIn().toMillis()))
                 .compact();
     }
 
@@ -50,8 +49,7 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
+        return Jwts.parserBuilder()
                 .setSigningKey(jwtProperties.getKey())
                 .build()
                 .parseClaimsJws(token)

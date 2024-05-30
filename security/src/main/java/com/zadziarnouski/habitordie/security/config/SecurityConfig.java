@@ -22,17 +22,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth ->
-                        auth.requestMatchers(
-                                        "/auth/**",
-                                        "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**",
-                                        "/actuator/**"
+        http.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> auth.requestMatchers(
+                                // @spotless:off
+                    "/auth/**",
+                    "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**",
+                    "/actuator/**"
+                    //@spotless:on
                                 )
-                                .permitAll()
-                                .anyRequest()
-                                .authenticated())
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

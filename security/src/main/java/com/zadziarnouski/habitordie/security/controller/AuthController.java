@@ -1,10 +1,10 @@
 package com.zadziarnouski.habitordie.security.controller;
 
 import com.zadziarnouski.common.dto.ErrorResponseDto;
-import com.zadziarnouski.habitordie.security.service.AuthService;
 import com.zadziarnouski.habitordie.security.dto.AuthRequestDto;
 import com.zadziarnouski.habitordie.security.dto.AuthResponseDto;
 import com.zadziarnouski.habitordie.security.dto.RegRequestDto;
+import com.zadziarnouski.habitordie.security.service.AuthService;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -27,6 +27,7 @@ public class AuthController {
 
     private final AuthService authService;
 
+    // @spotless:off
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200", description = "User registered successfully",
@@ -36,11 +37,13 @@ public class AuthController {
                     responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = ErrorResponseDto.class)))
     })
+    //@spotless:on
     @PostMapping("/register")
     public AuthResponseDto register(@Valid @RequestBody RegRequestDto request) {
         return authService.register(request);
     }
 
+    // @spotless:off
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200", description = "User authenticated successfully",
@@ -50,6 +53,7 @@ public class AuthController {
                     responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = ErrorResponseDto.class)))
     })
+    //@spotless:on
     @PostMapping("/authenticate")
     public AuthResponseDto register(@Valid @RequestBody AuthRequestDto request) {
         return authService.authenticate(request);

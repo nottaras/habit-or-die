@@ -1,5 +1,7 @@
 package com.zadziarnouski.habitordie.security.service;
 
+import static com.zadziarnouski.habitordie.security.entity.Role.USER;
+
 import com.zadziarnouski.habitordie.security.dto.AuthRequestDto;
 import com.zadziarnouski.habitordie.security.dto.AuthResponseDto;
 import com.zadziarnouski.habitordie.security.dto.RegRequestDto;
@@ -11,8 +13,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import static com.zadziarnouski.habitordie.security.entity.Role.USER;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +40,8 @@ public class AuthService {
 
     public AuthResponseDto authenticate(AuthRequestDto request) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.email(), request.password()));
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.email(), request.password()));
         } catch (AuthenticationException ex) {
             throw new AuthenticationFailedException();
         }
