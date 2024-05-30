@@ -6,25 +6,21 @@ plugins {
     alias(libs.plugins.spotless)
 }
 
-group = "com.zadziarnouski"
-version = "0.0.1-SNAPSHOT"
-
 dependencies {
     implementation(project(":habit"))
     implementation(project(":security"))
 
-    implementation("org.springframework.boot:spring-boot-starter")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-devtools")
-    implementation("org.flywaydb:flyway-core:10.13.0")
-    implementation("org.flywaydb:flyway-database-postgresql:10.13.0")
+    implementation(libs.springboot.starter)
+    implementation(libs.springboot.starter.jpa)
+    implementation(libs.bundles.flyway)
+    implementation(libs.springboot.devtools)
+    implementation(libs.springboot.starter.actuator)
 
-    runtimeOnly("io.micrometer:micrometer-registry-prometheus")
+    runtimeOnly(libs.micrometer)
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation(libs.springboot.starter.test)
+
+    testRuntimeOnly(libs.junit)
 }
 
 tasks {

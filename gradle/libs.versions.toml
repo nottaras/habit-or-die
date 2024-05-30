@@ -4,6 +4,9 @@ spring-dependency-management = "1.1.4"
 lombok = "8.6"
 flyway = "10.13.0"
 spotless = "6.25.0"
+mapstruct = "1.5.5.Final"
+openapi = "2.5.0"
+jjwt = "0.11.5"
 
 [plugins]
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
@@ -13,4 +16,27 @@ flyway = { id = "org.flywaydb.flyway", version.ref = "flyway" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 [libraries]
+springboot-starter = { group = "org.springframework.boot", name = "spring-boot-starter" }
+springboot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web" }
+springboot-starter-jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa" }
+springboot-starter-security = { group = "org.springframework.boot", name = "spring-boot-starter-security" }
+springboot-starter-validation = { group = "org.springframework.boot", name = "spring-boot-starter-validation" }
+springboot-starter-test = { group = "org.springframework.boot", name = "spring-boot-starter-test" }
+springboot-starter-actuator = { group = "org.springframework.boot", name = "spring-boot-starter-actuator" }
+springboot-security-test = { group = "org.springframework.security", name = "spring-security-test" }
+springboot-devtools = { group = "org.springframework.boot", name = "spring-boot-devtools" }
+junit = { group = "org.junit.platform", name = "junit-platform-launcher" }
+flyway-core = { group = "org.flywaydb", name = "flyway-core", version.ref = "flyway" }
+flyway-postgresql = { group = "org.flywaydb", name = "flyway-database-postgresql", version.ref = "flyway" }
+micrometer = { group = "io.micrometer", name = "micrometer-registry-prometheus" }
+mapstruct = { group = "org.mapstruct", name = "mapstruct", version.ref = "mapstruct" }
+mapstruct-processor = { group = "org.mapstruct", name = "mapstruct-processor", version.ref = "mapstruct" }
+postgresql = { group = "org.postgresql", name = "postgresql" }
+openapi = { group = "org.springdoc", name = "springdoc-openapi-starter-webmvc-ui", version.ref = "openapi" }
+jjwt-api = { group = "io.jsonwebtoken", name = "jjwt-api", version.ref = "jjwt" }
+jjwt-impl = { group = "io.jsonwebtoken", name = "jjwt-impl", version.ref = "jjwt" }
+jjwt-jackson = { group = "io.jsonwebtoken", name = "jjwt-jackson", version.ref = "jjwt" }
+
 [bundles]
+flyway = ["flyway-core", "flyway-postgresql"]
+jjwt = ["jjwt-api", "jjwt-impl", "jjwt-jackson"]
