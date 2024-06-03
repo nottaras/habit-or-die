@@ -3,7 +3,6 @@ package com.zadziarnouski.habitordie.security.controller;
 import com.zadziarnouski.common.dto.ErrorResponseDto;
 import com.zadziarnouski.habitordie.security.dto.AuthRequestDto;
 import com.zadziarnouski.habitordie.security.dto.AuthResponseDto;
-import com.zadziarnouski.habitordie.security.dto.RegRequestDto;
 import com.zadziarnouski.habitordie.security.service.AuthService;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -39,7 +38,7 @@ public class AuthController {
     })
     //@spotless:on
     @PostMapping("/register")
-    public AuthResponseDto register(@Valid @RequestBody RegRequestDto request) {
+    public AuthResponseDto register(@Valid @RequestBody AuthRequestDto request) {
         return authService.register(request);
     }
 
@@ -55,7 +54,7 @@ public class AuthController {
     })
     //@spotless:on
     @PostMapping("/authenticate")
-    public AuthResponseDto register(@Valid @RequestBody AuthRequestDto request) {
+    public AuthResponseDto authenticate(@Valid @RequestBody AuthRequestDto request) {
         return authService.authenticate(request);
     }
 }

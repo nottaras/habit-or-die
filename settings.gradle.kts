@@ -5,4 +5,6 @@ include(
     "security",
     "habit",
     "common",
+    "profile",
+    "storage",
 )

@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/habits")
 @RequiredArgsConstructor
-@Tag(name = "Habits", description = "Operations related to habit resource")
+@Tag(name = "Habit", description = "Operations related to habit resource")
 public class HabitController {
 
     private final HabitService habitService;

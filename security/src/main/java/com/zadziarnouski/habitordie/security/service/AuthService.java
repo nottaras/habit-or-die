@@ -4,7 +4,6 @@ import static com.zadziarnouski.habitordie.security.entity.Role.USER;
 
 import com.zadziarnouski.habitordie.security.dto.AuthRequestDto;
 import com.zadziarnouski.habitordie.security.dto.AuthResponseDto;
-import com.zadziarnouski.habitordie.security.dto.RegRequestDto;
 import com.zadziarnouski.habitordie.security.entity.User;
 import com.zadziarnouski.habitordie.security.exception.AuthenticationFailedException;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +22,8 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthResponseDto register(RegRequestDto request) {
+    public AuthResponseDto register(AuthRequestDto request) {
         var user = User.builder()
-                .firstname(request.firstname())
-                .lastname(request.lastname())
                 .email(request.email())
                 .password(passwordEncoder.encode(request.password()))
                 .role(USER)
@@ -35,7 +32,7 @@ public class AuthService {
 
         var jwtToken = jwtService.generateToken(user);
 
-        return new AuthResponseDto(jwtToken);
+        return new AuthResponseDto(user.getId(), jwtToken);
     }
 
     public AuthResponseDto authenticate(AuthRequestDto request) {
@@ -49,6 +46,6 @@ public class AuthService {
         var user = userService.getUserByEmail(request.email());
         var jwtToken = jwtService.generateToken(user);
 
-        return new AuthResponseDto(jwtToken);
+        return new AuthResponseDto(user.getId(), jwtToken);
     }
 }

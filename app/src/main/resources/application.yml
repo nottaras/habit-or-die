@@ -7,14 +7,20 @@ spring:
     password: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
-    hibernate:
-      ddl-auto: create-drop
     show-sql: true
     properties:
       hibernate:
         format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: habitordie
+      username: mongo
+      password: mongo
+      authentication-database: admin
   banner:
     location: static/banner.txt
 
@@ -24,6 +30,10 @@ app:
     algorithm: HS256
     issuer: http://localhost:8080
     expires-in: 24h
+  file:
+    upload:
+      max-size: 15728640
+      allowed-types: image/jpeg,image/png
 
 management:
   endpoints:

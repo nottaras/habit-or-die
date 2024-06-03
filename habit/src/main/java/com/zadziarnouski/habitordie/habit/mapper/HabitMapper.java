@@ -11,5 +11,7 @@ public interface HabitMapper {
     HabitDto toDto(Habit habit);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     Habit toEntity(HabitDto habitDto);
 }

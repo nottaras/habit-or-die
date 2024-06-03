@@ -9,14 +9,13 @@ plugins {
 
 dependencies {
     implementation(project(":common"))
-    implementation(project(":security"))
 
     implementation(libs.springboot.starter)
     implementation(libs.springboot.starter.web)
     implementation(libs.springboot.starter.jpa)
     implementation(libs.springboot.starter.validation)
     implementation(libs.openapi)
-    implementation(libs.mapstruct)
+    implementation(libs.bundles.mapstruct)
 
     runtimeOnly(libs.postgresql)
 
