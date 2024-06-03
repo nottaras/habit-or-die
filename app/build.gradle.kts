@@ -7,8 +7,10 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":habit"))
     implementation(project(":security"))
+    implementation(project(":profile"))
+    implementation(project(":habit"))
+    implementation(project(":storage"))
 
     implementation(libs.springboot.starter)
     implementation(libs.springboot.starter.jpa)

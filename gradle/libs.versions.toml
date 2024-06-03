@@ -5,6 +5,7 @@ lombok = "8.6"
 flyway = "10.13.0"
 spotless = "6.25.0"
 mapstruct = "1.5.5.Final"
+mapstruct-lombok = "0.1.0"
 openapi = "2.5.0"
 jjwt = "0.11.5"
 
@@ -21,6 +22,7 @@ springboot-starter-web = { group = "org.springframework.boot", name = "spring-bo
 springboot-starter-jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa" }
 springboot-starter-security = { group = "org.springframework.boot", name = "spring-boot-starter-security" }
 springboot-starter-validation = { group = "org.springframework.boot", name = "spring-boot-starter-validation" }
+springboot-starter-mongodb = { group = "org.springframework.boot", name = "spring-boot-starter-data-mongodb" }
 springboot-starter-test = { group = "org.springframework.boot", name = "spring-boot-starter-test" }
 springboot-starter-actuator = { group = "org.springframework.boot", name = "spring-boot-starter-actuator" }
 springboot-security-test = { group = "org.springframework.security", name = "spring-security-test" }
@@ -30,13 +32,18 @@ flyway-core = { group = "org.flywaydb", name = "flyway-core", version.ref = "fly
 flyway-postgresql = { group = "org.flywaydb", name = "flyway-database-postgresql", version.ref = "flyway" }
 micrometer = { group = "io.micrometer", name = "micrometer-registry-prometheus" }
 mapstruct = { group = "org.mapstruct", name = "mapstruct", version.ref = "mapstruct" }
+mapstruct-lombok = { group = "org.projectlombok", name = "lombok-mapstruct-binding", version.ref = "mapstruct-lombok" }
 mapstruct-processor = { group = "org.mapstruct", name = "mapstruct-processor", version.ref = "mapstruct" }
 postgresql = { group = "org.postgresql", name = "postgresql" }
 openapi = { group = "org.springdoc", name = "springdoc-openapi-starter-webmvc-ui", version.ref = "openapi" }
 jjwt-api = { group = "io.jsonwebtoken", name = "jjwt-api", version.ref = "jjwt" }
 jjwt-impl = { group = "io.jsonwebtoken", name = "jjwt-impl", version.ref = "jjwt" }
 jjwt-jackson = { group = "io.jsonwebtoken", name = "jjwt-jackson", version.ref = "jjwt" }
+jakarta-persistence-api = { group = "jakarta.persistence", name = "jakarta.persistence-api" }
+hibernate-core = { group = "org.hibernate.orm", name = "hibernate-core" }
+
 
 [bundles]
+mapstruct = ["mapstruct", "mapstruct-lombok"]
 flyway = ["flyway-core", "flyway-postgresql"]
 jjwt = ["jjwt-api", "jjwt-impl", "jjwt-jackson"]

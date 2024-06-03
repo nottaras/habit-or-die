@@ -3,6 +3,7 @@ package com.zadziarnouski.habitordie.security.service;
 import com.zadziarnouski.habitordie.security.entity.User;
 import com.zadziarnouski.habitordie.security.exception.NotFoundException;
 import com.zadziarnouski.habitordie.security.repository.UserRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,10 @@ public class UserService {
 
     public void save(User user) {
         userRepository.save(user);
+    }
+
+    public Optional<User> getUserById(Long id) {
+        return userRepository.findById(id);
     }
 
     private ResponseStatusException handleHabitNotFound(String email) {
